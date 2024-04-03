@@ -12,8 +12,10 @@
 </p>
 
 ## Contributors
-[@]()<br>
-[@]()
+[@luisffee](https://github.com/luisffee)<br>
+[@thaizagularte](https://github.com/thaizagularte)<br>
+[@Maicouglas](https://github.com/Maicouglas)
+[@ViniRene](https://github.com/ViniRene)<br>
  
 <br>
 Visit the site through: #
@@ -28,7 +30,7 @@ Visit the site through: #
 ## Steps
 ### Design
 
-Through [Figma](https://figma.com) <img style="width:1%" src="https://cdn.worldvectorlogo.com/logos/figma-1.svg"> we planned beforehand all the pages we were going to develop, going from the low to the high fidelity<br><br>References:
+Through [Figma](https://figma.com) <img style="width:1%" src="https://cdn.worldvectorlogo.com/logos/figma-5.svg"> we planned beforehand all the pages we were going to develop, going from the low to the high fidelity<br><br>References:
 -
 -
 -
