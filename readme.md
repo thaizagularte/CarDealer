@@ -14,7 +14,7 @@
 ## Contributors
 [@luisffee](https://github.com/luisffee)<br>
 [@thaizagularte](https://github.com/thaizagularte)<br>
-[@Maicouglas](https://github.com/Maicouglas)
+[@Maicouglas](https://github.com/Maicouglas)<br>
 [@ViniRene](https://github.com/ViniRene)<br>
  
 <br>
