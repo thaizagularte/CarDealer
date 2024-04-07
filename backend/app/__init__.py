@@ -1,9 +1,7 @@
-from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from flask_cors import CORS
 from flask_login import LoginManager
 from config import config
-from os import path
 from .db import InitDB
 
 

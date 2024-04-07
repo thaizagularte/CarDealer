@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, url_for, redirect, render_template
-from .models import Users
+from .models import User
 from ...db import db
 
 auth_bp = Blueprint('auth', __name__,
@@ -13,7 +13,7 @@ def registerUser():
         password1 = request.form['password1']
         password2 = request.form['password2']
         
-        user = Users.query.filter_by(email=email).first()
+        user = User.query.filter_by(email=email).first()
         if user:
             return jsonify({'message':'User already exists'})
         elif len(email) < 4:
@@ -25,7 +25,7 @@ def registerUser():
         elif len(password1) < 7:
             return jsonify({'message':'Password must be at least 7 characters.'})
         else:
-            new_user = Users(name=name, email=email, password=password1)
+            new_user = User(name=name, email=email, password=password1)
             db.session.add(new_user)
             db.session.commit()
             return jsonify({'message':'User created successfully'})
