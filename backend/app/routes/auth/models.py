@@ -4,11 +4,12 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     document_number = db.Column(db.String(18), unique=True, nullable=False)
+    username = db.Column(db.String(16), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), nullable=False)
+    password = db.Column(db.String(40), nullable=False)
     created_at = db.Column(db.Date)
-    user_cpf = db.relationship("UserCPF", uselist=False, back_populates="users")
-    user_cnpj = db.relationship("UserCNPJ", uselist=False, back_populates="users")
+    user_cpf = db.relationship("UserCPF", uselist=False, back_populates="user")
+    user_cnpj = db.relationship("UserCNPJ", uselist=False, back_populates="user")
 
 class UserCPF(db.Model):
     __tablename__ = 'users_cpf'
