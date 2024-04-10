@@ -7,8 +7,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
     created_at = db.Column(db.Date)
-    user_cpf = db.relationship("UserCPF", uselist=False, back_populates="client")
-    user_cnpj = db.relationship("UserCNPJ", uselist=False, back_populates="client")
+    user_cpf = db.relationship("UserCPF", uselist=False, back_populates="users")
+    user_cnpj = db.relationship("UserCNPJ", uselist=False, back_populates="users")
 
 class UserCPF(db.Model):
     __tablename__ = 'users_cpf'
