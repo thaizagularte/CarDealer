@@ -30,7 +30,7 @@ Visit the site through: #
 ## Steps
 ### Design
 
-Through [Figma](https://figma.com) <img style="width:1%" src="https://cdn.worldvectorlogo.com/logos/figma-5.svg"> we planned beforehand all the pages we were going to develop, going from the low to the high fidelity<br><br>References:
+Through [Figma](https://figma.com) <img style="width:3%" src="https://cdn.worldvectorlogo.com/logos/figma-5.svg"> we planned beforehand all the pages we were going to develop, going from the low to the high fidelity<br><br>References:
 -
 -
 -
