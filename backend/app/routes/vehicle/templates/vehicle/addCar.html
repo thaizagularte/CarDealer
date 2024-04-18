@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>Add</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <div class="header">
@@ -11,17 +11,21 @@
         <h2>Dados do veiculo</h2>
         <form method="post">
 
-           <input type="text" name="name_car" placeholder="Preencha o nome do veiculo"/>
-           <input type="date" name="year_car" placeholder="Preencha o ano do veiculo"/>
-           <input type="text" name="state_car" placeholder="Preencha o estado do veiculo"/>
-           <input type="number" name="value_car" placeholder="Preencha o valor"/>
-           <input type="number" name="mileage_car" placeholder="Preencha a kilometragem do veiculo"/>
-           <select name="languages" id="lang">
-            <option value="javascript">HB20</option>
-            <option value="php">Fusca</option>
-           </select>
-           <textarea></textarea>
-           
+            <input type="text" name="name_car" placeholder="Preencha o nome do veiculo"/>
+            <input type="text" name="year_car" placeholder="Preencha o ano do veiculo"/>
+            <input type="text" name="state_car" placeholder="Preencha o estado do veiculo"/>
+            <input type="number" name="value_car" placeholder="Preencha o valor"/>
+            <input type="number" name="mileage_car" placeholder="Preencha a kilometragem do veiculo"/>
+            <select name="models" id="id_model">
+                {% for model in models %}
+                    <option>{{ models.name }}</option>
+                {% endfor %}
+            </select>
+            <textarea name="description_car" placeholder="Descrição do veiculo"></textarea>
+            <button type="submit">
+                Enviar
+            </button>
+
         </form>
     </div>
 </body>
