@@ -1,3 +1,4 @@
+<!-- addCar.html -->
 <html>
 <head>
     <title>Add</title>
@@ -5,26 +6,27 @@
 </head>
 <body>
     <div class="header">
-        <h1>Criar anuncio</h1>
+        <h1>Criar anúncio</h1>
     </div>
     <div class="content">
-        <h2>Dados do veiculo</h2>
-        <form method="post">
+        <h2>Dados do veículo</h2>
+        <form method="post" action="{{ url_for('vehicle.create_vehicle') }}">
 
-            <input type="text" name="name_car" placeholder="Preencha o nome do veiculo"/>
-            <input type="text" name="year_car" placeholder="Preencha o ano do veiculo"/>
-            <input type="text" name="state_car" placeholder="Preencha o estado do veiculo"/>
-            <input type="number" name="value_car" placeholder="Preencha o valor"/>
-            <input type="number" name="mileage_car" placeholder="Preencha a kilometragem do veiculo"/>
-            <select name="models" id="id_model">
+            <input type="text" name="name_car" placeholder="Preencha o nome do veículo" required/>
+            <input type="text" name="year_car" placeholder="Preencha o ano do veículo" required/>
+            <input type="text" name="state_car" placeholder="Preencha o estado do veículo" required/>
+            <input type="number" name="value_car" placeholder="Preencha o valor" required/>
+            <input type="number" name="mileage_car" placeholder="Preencha a quilometragem do veículo"/>
+            
+            <select name="id_model" id="id_model" required>
                 {% for model in models %}
-                    <option>{{ models.name }}</option>
+                    <option value="{{ model.id }}">{{ model.model_name }}</option>
                 {% endfor %}
             </select>
-            <textarea name="description_car" placeholder="Descrição do veiculo"></textarea>
-            <button type="submit">
-                Enviar
-            </button>
+
+            <textarea name="description_car" placeholder="Descrição do veículo" required></textarea>
+            
+            <button type="submit">Enviar</button>
 
         </form>
     </div>
