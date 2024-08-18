@@ -31,3 +31,7 @@ def registerUser():
             return jsonify({'message':'User created successfully'})
         
     return render_template('auth/register.html')
+
+@auth_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    return render_template('auth/login.html')
