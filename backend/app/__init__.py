@@ -21,6 +21,6 @@ def create_app(app_config='development'):
     from .routes.auth.auth import auth_bp
     from .routes.vehicle.vehicle import vehicle_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
-    app.register_blueprint(vehicle_bp, url_prefix='/')
+    app.register_blueprint(vehicle_bp, url_prefix='/vehicle')
 
     return app
