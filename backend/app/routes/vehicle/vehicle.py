@@ -8,13 +8,13 @@ vehicle_bp = Blueprint('vehicle', __name__, template_folder='templates')
 @vehicle_bp.route('/', methods=['GET'])
 def get_vehicles():
     vehicles = Vehicle.query.all()
-    return render_template('vehicles.html', vehicles=vehicles)
+    return render_template('vehicles/vehicles.html', vehicles=vehicles)
 
 #ROTA PARA ABRIR TEMPLATE DE ADICIONAR VEICULO
 @vehicle_bp.route('/addVehicle', methods=['GET'])
 def add_vehicle():
     models = Models.query.all()
-    return render_template('addCar.html', models=models)
+    return render_template('vehicles/addCar.html', models=models)
 
 #ROTA QUE ADICIONA O NOVO VEICULO
 @vehicle_bp.route('/add', methods=['POST'])

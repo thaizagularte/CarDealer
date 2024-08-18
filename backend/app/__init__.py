@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect
 from flask_cors import CORS
 from config import config
 from .db import init_db
@@ -22,5 +22,7 @@ def create_app(app_config='development'):
     from .routes.vehicle.vehicle import vehicle_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(vehicle_bp, url_prefix='/vehicle')
-
+    @app.route('/')
+    def index():
+        return redirect('/auth/login')
     return app
