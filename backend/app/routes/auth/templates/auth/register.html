@@ -1,22 +1,78 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Cadastro</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
     <div class="header">
-        <h1>Cadastrar usuário</h1>
+      <h1>Cadastrar usuário</h1>
     </div>
     <div class="content">
-        <form method="post">
-            <input type="text" name="name" placeholder="Nome do usuário">
-            <input type="email" name="email" placeholder="Email">
-            <input type="password" name="password1" placeholder="Senha">
-            <input type="password" name="password2" placeholder="Confirmar senha">
-            <input type="text" name="cpf_cnpj" placeholder="Documento CPF ou CNPJ">
-            <button type="submit">Cadastrar</button>
-        </form>
+      <form method="post">
+        <input type="text" name="name" placeholder="Nome do usuário" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password1" placeholder="Senha" required />
+        <input
+          type="password"
+          name="password2"
+          placeholder="Confirmar senha"
+          required
+        />
+        <input
+          type="text"
+          name="cpf_cnpj"
+          id="cpf_cnpj"
+          placeholder="Documento CPF ou CNPJ"
+          required
+        />
+
+        <!-- Fields for CPF registration -->
+        <div id="cpf_fields">
+          <input
+            type="text"
+            name="date_of_birth"
+            placeholder="Data de nascimento (dd/mm/yyyy)"
+          />
+        </div>
+
+        <!-- Fields for CNPJ registration -->
+        <div id="cnpj_fields" style="display: none">
+          <input
+            type="text"
+            name="company_name"
+            placeholder="Nome da Empresa"
+          />
+          <input
+            type="text"
+            name="date_of_foundation"
+            placeholder="Data de fundação (dd/mm/yyyy)"
+          />
+        </div>
+
+        <button type="submit">Cadastrar</button>
+      </form>
     </div>
-</body>
+
+    <script>
+      // Show/hide fields based on document type (CPF or CNPJ)
+      $("#cpf_cnpj").on("input", function () {
+        var documentNumber = $(this).val();
+        if (documentNumber.length == 11) {
+          // Show CPF fields
+          $("#cpf_fields").show();
+          $("#cnpj_fields").hide();
+        } else if (documentNumber.length == 14) {
+          // Show CNPJ fields
+          $("#cpf_fields").hide();
+          $("#cnpj_fields").show();
+        } else {
+          // Hide both if not valid CPF/CNPJ length
+          $("#cpf_fields").hide();
+          $("#cnpj_fields").hide();
+        }
+      });
+    </script>
+  </body>
 </html>
