@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <title>Add</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Criar anúncio</h1>
+    </div>
+    <div class="content">
+      <h2>Dados do veículo</h2>
+      <form method="post" action="{{ url_for('vehicle.new_vehicle') }}">
+        <input
+          type="text"
+          name="year_car"
+          placeholder="Preencha o ano do veículo"
+          required
+        />
+        <input
+          type="text"
+          name="state_car"
+          placeholder="Preencha o estado do veículo"
+          required
+        />
+        <input
+          type="number"
+          name="value_car"
+          placeholder="Preencha o valor"
+          required
+        />
+        <input
+          type="number"
+          name="mileage_car"
+          placeholder="Preencha a quilometragem do veículo"
+        />
+
+        <select name="id_brand" id="id_brand" required>
+          <option value="">Selecione uma marca</option>
+          {% for brand in brands %}
+          <option value="{{ brand.id }}">{{ brand.name_brand }}</option>
+          {% endfor %}
+        </select>
+
+        <select name="id_model" id="id_model" required>
+          <option value="">Selecione um modelo</option>
+          <!-- Models will be loaded here dynamically -->
+        </select>
+
+        <textarea
+          name="description_car"
+          placeholder="Descrição do veículo"
+          required
+        ></textarea>
+
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+
+    <script>
+      // jQuery to dynamically load models based on selected brand
+      $("#id_brand").change(function () {
+        var brandId = $(this).val();
+
+        // Clear the models dropdown
+        $("#id_model").empty();
+
+        if (brandId) {
+          $.ajax({
+            url: "{{ url_for('vehicle.get_models_by_brand') }}",
+            type: "GET",
+            data: { brand_id: brandId },
+            success: function (models) {
+              $("#id_model").append(
+                '<option value="">Selecione um modelo</option>'
+              );
+              $.each(models, function (index, model) {
+                $("#id_model").append(
+                  '<option value="' +
+                    model.id +
+                    '">' +
+                    model.model_name + // Use model_name instead of name_brand
+                    "</option>"
+                );
+              });
+            },
+            error: function () {
+              console.log("Erro ao carregar os modelos.");
+            },
+          });
+        } else {
+          $("#id_model").append(
+            '<option value="">Selecione um modelo</option>'
+          );
+        }
+      });
+    </script>
+  </body>
+</html>

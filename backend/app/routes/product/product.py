@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, url_for, redirect, render_templat
 from .models import Product
 from ...db import db
 
-product_bp = Blueprint('vehicle', __name__,
+product_bp = Blueprint('product', __name__,
                     template_folder='templates')
 
 @product_bp.route('/Product', methods=['GET', 'POST'])
@@ -19,4 +19,4 @@ def routesProduct():
         db.session.commit()
 
     elif request.method == 'GET':
-        return render_template('product.html')    #leva pro template que mostra os produtos
+        return render_template('product/addProduct.html')    #leva pro template que mostra os produtos
