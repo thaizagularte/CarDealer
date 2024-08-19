@@ -19,9 +19,9 @@ def registerUser():
         email = request.form['email']
         password1 = request.form['password1']
         password2 = request.form['password2']
-        document_number = request.form['cpf_cnpj']  # CPF or CNPJ
+        document_number = request.form['cpf_cnpj']
 
-        # Validate input
+        # Validar entrada
         user = User.query.filter_by(email=email).first()
         if user:
             return jsonify({'message': 'User already exists'})
@@ -35,28 +35,35 @@ def registerUser():
             return jsonify({'message': 'Password must be at least 7 characters.'})
         elif not is_cpf(document_number) and not is_cnpj(document_number):
             return jsonify({'message': 'Invalid CPF or CNPJ.'})
-        
-        # Create new user
+
+        # Criar novo usuário
         new_user = User(username=username, email=email, password=password1, document_number=document_number)
         db.session.add(new_user)
-        db.session.flush()  # Get user ID without committing yet
+        db.session.flush()  # Obter ID do usuário sem fazer commit ainda
 
-        # Determine if the document is CPF or CNPJ and create the corresponding record
+        # Determinar se é CPF ou CNPJ e criar o registro correspondente
         if is_cpf(document_number):
             name = request.form.get('name')
-            date_of_birth = request.form.get('date_of_birth')  # Ensure this field is included in the form
+            date_of_birth = request.form.get('date_of_birth')
+            if not date_of_birth:
+                return jsonify({'message': 'Date of Birth is required for CPF.'}), 400
             user_cpf = UserCPF(user_id=new_user.id, name=name, date_of_birth=date_of_birth)
             db.session.add(user_cpf)
         elif is_cnpj(document_number):
-            company_name = request.form.get('company_name')  # Ensure this field is included in the form
-            date_of_foundation = request.form.get('date_of_foundation')  # Ensure this field is included in the form
+            company_name = request.form.get('company_name')
+            date_of_foundation = request.form.get('date_of_foundation')
+            if not company_name or not date_of_foundation:
+                return jsonify({'message': 'Company Name and Date of Foundation are required for CNPJ.'}), 400
             user_cnpj = UserCNPJ(user_id=new_user.id, company_name=company_name, date_of_foundation=date_of_foundation)
             db.session.add(user_cnpj)
         
-        # Commit all changes
+        # Commit das mudanças
         db.session.commit()
         
         return jsonify({'message': 'User created successfully'})
-    
-    return render_template('auth/register.html')
 
+    return render_template('auth/register.html')
+@auth_bp.route('/login', methods=['GET', 'POST'])
+
+def login():
+    return render_template('auth/login.html')

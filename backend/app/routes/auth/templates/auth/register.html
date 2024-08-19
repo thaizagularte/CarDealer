@@ -1,78 +1,122 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Cadastro</title>
-    <link rel="stylesheet" type="text/css" href="styles.css" />
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuário</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-group input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <!-- Incluindo jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  </head>
-  <body>
-    <div class="header">
-      <h1>Cadastrar usuário</h1>
-    </div>
-    <div class="content">
-      <form method="post">
-        <input type="text" name="name" placeholder="Nome do usuário" required />
-        <input type="email" name="email" placeholder="Email" required />
-        <input type="password" name="password1" placeholder="Senha" required />
-        <input
-          type="password"
-          name="password2"
-          placeholder="Confirmar senha"
-          required
-        />
-        <input
-          type="text"
-          name="cpf_cnpj"
-          id="cpf_cnpj"
-          placeholder="Documento CPF ou CNPJ"
-          required
-        />
-
-        <!-- Fields for CPF registration -->
-        <div id="cpf_fields">
-          <input
-            type="text"
-            name="date_of_birth"
-            placeholder="Data de nascimento (dd/mm/yyyy)"
-          />
-        </div>
-
-        <!-- Fields for CNPJ registration -->
-        <div id="cnpj_fields" style="display: none">
-          <input
-            type="text"
-            name="company_name"
-            placeholder="Nome da Empresa"
-          />
-          <input
-            type="text"
-            name="date_of_foundation"
-            placeholder="Data de fundação (dd/mm/yyyy)"
-          />
-        </div>
-
-        <button type="submit">Cadastrar</button>
-      </form>
+</head>
+<body>
+    <div class="container">
+        <h2>Registro de Usuário</h2>
+        <form action="http://localhost:5000/auth/registerUser" method="POST">
+            <div class="form-group">
+                <label for="name">Nome de Usuário:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password1">Senha:</label>
+                <input type="password" id="password1" name="password1" required>
+            </div>
+            <div class="form-group">
+                <label for="password2">Confirme a Senha:</label>
+                <input type="password" id="password2" name="password2" required>
+            </div>
+            <div class="form-group">
+                <label for="cpf_cnpj">CPF/CNPJ:</label>
+                <input type="text" id="cpf_cnpj" name="cpf_cnpj" required>
+            </div>
+            <div id="cpf_fields" class="hidden">
+                <div class="form-group">
+                    <label for="date_of_birth">Data de Nascimento:</label>
+                    <input type="date" id="date_of_birth" name="date_of_birth">
+                </div>
+            </div>
+            <div id="cnpj_fields" class="hidden">
+                <div class="form-group">
+                    <label for="company_name">Nome da Empresa:</label>
+                    <input type="text" id="company_name" name="company_name">
+                </div>
+                <div class="form-group">
+                    <label for="date_of_foundation">Data de Fundação:</label>
+                    <input type="date" id="date_of_foundation" name="date_of_foundation">
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Registrar">
+            </div>
+        </form>
     </div>
 
     <script>
-      // Show/hide fields based on document type (CPF or CNPJ)
-      $("#cpf_cnpj").on("input", function () {
-        var documentNumber = $(this).val();
-        if (documentNumber.length == 11) {
-          // Show CPF fields
-          $("#cpf_fields").show();
-          $("#cnpj_fields").hide();
-        } else if (documentNumber.length == 14) {
-          // Show CNPJ fields
-          $("#cpf_fields").hide();
-          $("#cnpj_fields").show();
-        } else {
-          // Hide both if not valid CPF/CNPJ length
-          $("#cpf_fields").hide();
-          $("#cnpj_fields").hide();
-        }
-      });
+        $(document).ready(function () {
+            $("#cpf_cnpj").on("input", function () {
+                var documentNumber = $(this).val();
+                if (documentNumber.length === 11) {
+                    $("#cpf_fields").removeClass("hidden");
+                    $("#cnpj_fields").addClass("hidden");
+                } else if (documentNumber.length === 14) {
+                    $("#cnpj_fields").removeClass("hidden");
+                    $("#cpf_fields").addClass("hidden");
+                } else {
+                    $("#cpf_fields").addClass("hidden");
+                    $("#cnpj_fields").addClass("hidden");
+                }
+            });
+        });
     </script>
-  </body>
+</body>
 </html>

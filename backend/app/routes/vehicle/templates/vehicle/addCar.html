@@ -1,99 +1,173 @@
-<html>
-  <head>
-    <title>Add</title>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Anúncio</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .content h2 {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input, select, textarea, button {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #007BFF;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+    </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  </head>
-  <body>
-    <div class="header">
-      <h1>Criar anúncio</h1>
-    </div>
-    <div class="content">
-      <h2>Dados do veículo</h2>
-      <form method="post" action="{{ url_for('vehicle.new_vehicle') }}">
-        <input
-          type="text"
-          name="year_car"
-          placeholder="Preencha o ano do veículo"
-          required
-        />
-        <input
-          type="text"
-          name="state_car"
-          placeholder="Preencha o estado do veículo"
-          required
-        />
-        <input
-          type="number"
-          name="value_car"
-          placeholder="Preencha o valor"
-          required
-        />
-        <input
-          type="number"
-          name="mileage_car"
-          placeholder="Preencha a quilometragem do veículo"
-        />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Criar Anúncio</h1>
+        </div>
+        <div class="content">
+            <h2>Dados do Veículo</h2>
+            <form method="post" action="{{ url_for('vehicle.new_vehicle') }}">
+                <input
+                    type="text"
+                    name="year_car"
+                    placeholder="Preencha o ano do veículo"
+                    required
+                />
+                <input
+                    type="text"
+                    name="state_car"
+                    placeholder="Preencha o estado do veículo"
+                    required
+                />
+                <input
+                    type="number"
+                    name="value_car"
+                    placeholder="Preencha o valor"
+                    required
+                />
+                <input
+                    type="number"
+                    name="mileage_car"
+                    placeholder="Preencha a quilometragem do veículo"
+                />
 
-        <select name="id_brand" id="id_brand" required>
-          <option value="">Selecione uma marca</option>
-          {% for brand in brands %}
-          <option value="{{ brand.id }}">{{ brand.name_brand }}</option>
-          {% endfor %}
-        </select>
+                <select name="id_brand" id="id_brand" required>
+                    <option value="">Selecione uma marca</option>
+                    {% for brand in brands %}
+                    <option value="{{ brand.id }}">{{ brand.name_brand }}</option>
+                    {% endfor %}
+                </select>
 
-        <select name="id_model" id="id_model" required>
-          <option value="">Selecione um modelo</option>
-          <!-- Models will be loaded here dynamically -->
-        </select>
+                <select name="id_model" id="id_model" required>
+                    <option value="">Selecione um modelo</option>
+                    <!-- Models will be loaded here dynamically -->
+                </select>
 
-        <textarea
-          name="description_car"
-          placeholder="Descrição do veículo"
-          required
-        ></textarea>
+                <textarea
+                    name="description_car"
+                    placeholder="Descrição do veículo"
+                    required
+                ></textarea>
 
-        <button type="submit">Enviar</button>
-      </form>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
     </div>
 
     <script>
-      // jQuery to dynamically load models based on selected brand
-      $("#id_brand").change(function () {
-        var brandId = $(this).val();
+        // jQuery to dynamically load models based on selected brand
+        $("#id_brand").change(function () {
+            var brandId = $(this).val();
 
-        // Clear the models dropdown
-        $("#id_model").empty();
+            // Clear the models dropdown
+            $("#id_model").empty();
 
-        if (brandId) {
-          $.ajax({
-            url: "{{ url_for('vehicle.get_models_by_brand') }}",
-            type: "GET",
-            data: { brand_id: brandId },
-            success: function (models) {
-              $("#id_model").append(
-                '<option value="">Selecione um modelo</option>'
-              );
-              $.each(models, function (index, model) {
-                $("#id_model").append(
-                  '<option value="' +
-                    model.id +
-                    '">' +
-                    model.model_name + // Use model_name instead of name_brand
-                    "</option>"
-                );
-              });
-            },
-            error: function () {
-              console.log("Erro ao carregar os modelos.");
-            },
-          });
-        } else {
-          $("#id_model").append(
-            '<option value="">Selecione um modelo</option>'
-          );
-        }
-      });
+            if (brandId) {
+                $.ajax({
+                    url: "{{ url_for('vehicle.get_models_by_brand') }}",
+                    type: "GET",
+                    data: { brand_id: brandId },
+                    success: function (models) {
+                        $("#id_model").append(
+                            '<option value="">Selecione um modelo</option>'
+                        );
+                        $.each(models, function (index, model) {
+                            $("#id_model").append(
+                                '<option value="' + model.id + '">' + model.model_name + '</option>'
+                            );
+                        });
+                    },
+                    error: function () {
+                        console.log("Erro ao carregar os modelos.");
+                    },
+                });
+            } else {
+                $("#id_model").append('<option value="">Selecione um modelo</option>');
+            }
+        });
     </script>
-  </body>
+</body>
 </html>

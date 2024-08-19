@@ -1,18 +1,95 @@
 <!-- vehicles.html -->
-<html>
-  <head>
-    <title>Veículos</title>
-  </head>
-  <body>
-    <h1>Lista de Veículos</h1>
-    <a href="{{ url_for('vehicle.addVehicle') }}">Adicionar Novo Veículo</a>
-    <ul>
-      {% for vehicle in vehicles %}
-      <li>
-        {{ vehicle.model.brand.name_brand }} - {{ vehicle.model.model_name }} -
-        {{ vehicle.year }} - {{ vehicle.state }} - {{ vehicle.mileage }} km
-      </li>
-      {% endfor %}
-    </ul>
-  </body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Veículos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 600px;
+            max-width: 100%;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        a {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li:nth-child(even) {
+            background-color: #ececec;
+        }
+
+        .vehicle-info {
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Veículos</h1>
+        <a href="{{ url_for('vehicle.addVehicle') }}">Adicionar Novo Veículo</a>
+        <ul>
+            {% for vehicle in vehicles %}
+            <li>
+                <span class="vehicle-info">
+                    {{ vehicle.model.brand.name_brand }} - {{ vehicle.model.model_name }} -
+                    {{ vehicle.year }} - {{ vehicle.state }} - {{ vehicle.mileage }} km
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
 </html>
