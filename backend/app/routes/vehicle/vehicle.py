@@ -69,3 +69,22 @@ def new_vehicle():
     db.session.commit()
     return redirect(url_for('vehicle.getVehicles'))
 
+@vehicle_bp.route('/model', methods=['GET'])
+def model():
+    model_id = request.args.get('model_id')
+    if not model_id:
+        return jsonify({'error': 'model_id parameter is required'}), 400
+    
+    # Consultar o banco de dados
+    model = Models.query.filter_by(id=model_id).first()  # Supondo que a coluna seja 'id'
+
+    if model is None:
+        return jsonify({'error': 'Model not found'}), 404
+
+    # Retornar os dados como JSON
+    return jsonify({
+        'id': model.id,
+        'model_name': model.model_name, 
+    })
+
+

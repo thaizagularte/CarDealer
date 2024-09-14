@@ -1,11 +1,16 @@
 import React from 'react';
+import { getModel } from '../controllers/models-controllers';
+import { useState, useEffect } from 'react'
 
 const VehicleItem = ({ vehicle }) => {
 
   const [modelName, setModelName] = useState('');
 
   useEffect(() => {
-    
+    getModel(vehicle.id_model).then((model) => {
+      setModelName(model.model_name)
+    }
+    )
   }, [vehicle.id_model]);
 
   const imageSrc = vehicle.image.startsWith('data:')
@@ -16,7 +21,7 @@ const VehicleItem = ({ vehicle }) => {
     <div style={styles.vehicleItem}>
       <img src={imageSrc} alt={vehicle.id} style={styles.image} />
       <div style={styles.info}>
-        <p style={styles.detail}>Modelo: {vehicle.id_model}</p>
+        <p style={styles.detail}>Modelo: {modelName}</p>
         <p style={styles.detail}>Ano: {vehicle.year}</p>
         <p style={styles.detail}>Quilometragem: {vehicle.mileage} km</p>
       </div>
