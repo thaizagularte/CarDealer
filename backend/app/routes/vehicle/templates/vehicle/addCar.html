@@ -89,7 +89,7 @@
         </div>
         <div class="content">
             <h2>Dados do Veículo</h2>
-            <form method="post" action="{{ url_for('vehicle.new_vehicle') }}">
+            <form method="post" action="{{ url_for('vehicle.new_vehicle') }}"  enctype="multipart/form-data">
                 <input
                     type="text"
                     name="year_car"
@@ -131,6 +131,12 @@
                     placeholder="Descrição do veículo"
                     required
                 ></textarea>
+
+                <input
+                    type="file"
+                    name="image_car"
+                    accept="image/*"
+                />
 
                 <button type="submit">Enviar</button>
             </form>

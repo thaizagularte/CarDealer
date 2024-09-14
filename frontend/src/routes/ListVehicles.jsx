@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import '../App.css'
 import {getVehicles} from '../controllers/vehicles-controllers'
-import ListVehicles from '../components/listVehicles'
+import ComponentListVehicles from '../components/listVehicles'
 
-function Home() {
+function ListVehicles() {
     const [veiculos, setVeiculos] = useState({})
     useEffect(() => {
         getVehicles().then((response) =>{
@@ -15,9 +15,9 @@ function Home() {
 
     return (
         <>
-            <h1> Aqui vai o perfil da loja</h1>
+        <ComponentListVehicles vehicles={veiculos}/> 
         </>
     );
 }
 
-export default Home
+export default ListVehicles
