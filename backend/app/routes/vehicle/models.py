@@ -27,5 +27,4 @@ class Vehicle(db.Model):
     year = db.Column(db.Integer, nullable=False)
     state = db.Column(db.String(20), nullable=False)
     mileage = db.Column(db.Float, nullable=True)
-
-    # Vehicle is linked to a model, which is in turn linked to a brand
+    image = db.Column(db.String, nullable=True) 

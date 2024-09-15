@@ -10,6 +10,7 @@ import {
 import Home from './routes/Home.jsx'
 import AddTask from './routes/AddTask.jsx'
 import EditTask from './routes/EditTask.jsx'
+import ListVehicles from './routes/ListVehicles.jsx';
 
 
 
@@ -19,8 +20,12 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/",
+        path: "/home",
         element: <Home />
+      },
+      {
+          path: "/listVehicles",
+          element: <ListVehicles/>
       },
       {
         path: "/add",
