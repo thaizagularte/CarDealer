@@ -69,6 +69,59 @@ def new_vehicle():
     db.session.commit()
     return redirect(url_for('vehicle.getVehicles'))
 
+@vehicle_bp.route('/<int:id>', methods=['PUT'])
+def edit_vehicle(id):
+    # Pegar o veículo pelo ID
+    vehicle = Vehicle.query.get(id)
+
+    if vehicle is None:
+        return jsonify({'error': 'Vehicle not found'}), 404
+
+    try:
+        # Pega os dados passados via query params
+        id_model = request.args.get('id_model', type=int)
+        year_car = request.args.get('year_car', type=int)
+        state_car = request.args.get('state_car', type=str)
+        mileage_car = request.args.get('mileage_car', type=float)
+        image_car = request.args.get('image_car')  # Supondo que a imagem seja passada como base64
+
+        # Atualizar os campos que não são None (ou seja, foram enviados para edição)
+        if id_model:
+            vehicle.id_model = id_model
+        if year_car:
+            vehicle.year = year_car
+        if state_car:
+            vehicle.state = state_car
+        if mileage_car:
+            vehicle.mileage = mileage_car
+        if image_car:
+            vehicle.image = image_car  # Imagem passada como base64 já processada
+        
+        # Confirma as alterações no banco de dados
+        db.session.commit()
+
+        return jsonify({'message': f'Vehicle {id} updated successfully'}), 200
+
+    except Exception as e:
+        db.session.rollback()  # Faz rollback se houver erro
+        return jsonify({'error': f'Error updating vehicle: {str(e)}'}), 500
+
+@vehicle_bp.route('/<int:id>', methods=['DELETE'])
+def delete_vehicle(id):
+    # Consulta o veículo no banco de dados
+    vehicle = Vehicle.query.get(id)
+    
+    if vehicle is None:
+        return jsonify({'error': 'Vehicle not found'}), 404
+    
+    try:
+        db.session.delete(vehicle)  # Remove o veículo do banco
+        db.session.commit()  # Confirma a remoção no banco
+        return jsonify({'message': f'Vehicle {id} deleted successfully'}), 200
+    except Exception as e:
+        db.session.rollback()  # Caso haja um erro, faz rollback
+        return jsonify({'error': f'Error deleting vehicle: {str(e)}'}), 500
+    
 @vehicle_bp.route('/model', methods=['GET'])
 def model():
     model_id = request.args.get('model_id')

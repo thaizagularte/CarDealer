@@ -1,17 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { getModel } from '../controllers/models-controllers';
-import { useState, useEffect } from 'react'
+import { deleteVehicle, editVehicle } from '../controllers/vehicles-controllers';
 
 const VehicleItem = ({ vehicle }) => {
-
   const [modelName, setModelName] = useState('');
 
-  useEffect(() => {
     getModel(vehicle.id_model).then((model) => {
-      setModelName(model.model_name)
-    }
-    )
-  }, [vehicle.id_model]);
+      setModelName(model.model_name);
+    });
 
   const imageSrc = vehicle.image.startsWith('data:')
     ? vehicle.image
@@ -21,9 +17,13 @@ const VehicleItem = ({ vehicle }) => {
     <div style={styles.vehicleItem}>
       <img src={imageSrc} alt={vehicle.id} style={styles.image} />
       <div style={styles.info}>
-        <p style={styles.detail}>Modelo: {modelName}</p>
-        <p style={styles.detail}>Ano: {vehicle.year}</p>
-        <p style={styles.detail}>Quilometragem: {vehicle.mileage} km</p>
+        <p style={styles.detail}><b>Modelo:</b> {modelName}</p>
+        <p style={styles.detail}><b>Ano:</b> {vehicle.year}</p>
+        <p style={styles.detail}><b>Quilometragem:</b> {vehicle.mileage} km</p>
+      </div>
+      <div style={styles.buttonContainer}>
+        <button onClick={() => {alert('Aqui vai abrir a tela de editar o veículo')}} style={styles.button}>Editar</button>
+        <button onClick={() => {deleteVehicle(vehicle.id)}} style={styles.button}>Deletar</button>
       </div>
     </div>
   );
@@ -39,7 +39,7 @@ const ComponentListVehicles = ({ vehicles }) => {
       {vehicles.length === 0 ? (
         <div style={styles.empty}>Nenhum veículo encontrado.</div>
       ) : (
-        vehicles.map(vehicle => (
+        vehicles.map((vehicle) => (
           <VehicleItem key={vehicle.id} vehicle={vehicle} />
         ))
       )}
@@ -74,17 +74,28 @@ const styles = {
   },
   info: {
     display: 'flex',
-    flexDirection: 'column',
-  },
-  id: {
-    margin: '0 0 10px 0',
-    fontSize: '1.2em',
-    color: '#333',
+    flexDirection: 'row',
+    gap: '20px', // Espaço entre as informações
   },
   detail: {
-    margin: '2px 0',
-    fontSize: '1em',
+    fontSize: '25px',
     color: '#555',
+    marginLeft: '2em',
+    marginRight: '2em'
+  },
+  buttonContainer: {
+    marginLeft: '50em',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px', // Espaço entre os botões
+  },
+  button: {
+    padding: '8px 12px',
+    backgroundColor: '#333',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
   },
   loading: {
     textAlign: 'center',
