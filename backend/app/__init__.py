@@ -7,17 +7,12 @@ from .db import InitDB
 def create_app(app_config='development'):
     app = Flask(__name__)
     db =  InitDB(app)
-    Cors = CORS(app)
     CORS(app, resources={r'/*': {'origins': '*'}},CORS_SUPPORTS_CREDENTIALS = True)
     app.config['CORS_HEADERS'] = 'Content-Type'
     app.secret_key = 'secret'
     app.config.from_object(config[app_config])
     app.config['SQLALCHEMY_DATABASE_URI'] = db.engine.url
     db = db.start()
-    
-    from .routes.auth.models import User
-    from .routes.vehicle.models import Vehicle, Brand, Models
-    from .routes.product.models import Product
     
     with app.app_context():
         db.create_all()

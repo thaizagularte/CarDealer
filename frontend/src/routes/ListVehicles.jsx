@@ -7,7 +7,7 @@ function ListVehicles() {
     const [veiculos, setVeiculos] = useState({})
     useEffect(() => {
         getVehicles().then((response) =>{
-            setVeiculos(response.data)
+            setVeiculos(response)
         }).catch(error => {
             console.log(error)
         })
