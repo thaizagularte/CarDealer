@@ -233,27 +233,49 @@ const UserRegister = () => {
               </div>
             </>
           )}
-          <div>
-            <input
-              type="submit"
-              value="Registrar"
-              style={{
-                backgroundColor: "#007bff",
-                color: "#fff",
-                border: "none",
-                padding: "10px",
-                borderRadius: "5px",
-                cursor: "pointer",
-                width: "100%",
-              }}
-              onMouseOver={(e) =>
-                (e.target.style.backgroundColor = "#0056b3")
-              }
-              onMouseOut={(e) =>
-                (e.target.style.backgroundColor = "#007bff")
-              }
-            />
-          </div>
+         <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: "10px", // Espaçamento entre os botões
+            marginTop: "15px", // Espaço acima dos botões
+          }}
+        >
+          <button
+            type="submit"
+            style={{
+              flex: 1, // Faz os botões ocuparem o mesmo espaço
+              backgroundColor: "#007bff",
+              color: "#fff",
+              border: "none",
+              padding: "10px",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#0056b3")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#007bff")}
+          >
+            Registrar
+          </button>
+          <button
+            type="button" // Tipo de botão para evitar submissão
+            onClick={() => window.history.back()} // Voltar para a página anterior
+            style={{
+              flex: 1, // Faz os botões ocuparem o mesmo espaço
+              backgroundColor: "#6c757d",
+              color: "#fff",
+              border: "none",
+              padding: "10px",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#565e64")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#6c757d")}
+          >
+            Voltar
+          </button>
+        </div>
+
         </form>
       </div>
     </div>
