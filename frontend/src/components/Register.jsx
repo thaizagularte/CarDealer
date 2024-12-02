@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import InputMask from "react-input-mask";
-
+import { registerUser } from "../controllers/user-controllers";
 const UserRegister = () => {
   const [cpfCnpj, setCpfCnpj] = useState("");
   const [password1, setPassword1] = useState("");
@@ -11,14 +11,38 @@ const UserRegister = () => {
     setCpfCnpj(value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Impede o comportamento padrão de envio
+  
+    // Verifique se as senhas são iguais antes de enviar os dados
     if (password1 !== password2) {
-      event.preventDefault();
       setPasswordError(true);
-    } else {
-      setPasswordError(false);
+      return; // Impede o envio se as senhas não coincidirem
+    }
+  
+    setPasswordError(false); // Limpa o erro se as senhas coincidirem
+  
+    // Chama a função registerUser passando os dados
+    try {
+      console.log('AQUIIIIIIII', event.target.name.value)
+      const response = await registerUser({
+        name: event.target.name.value, // Pega o nome do input de nome
+        email: event.target.email.value, // Pega o nome do input de email
+        password1,
+        password2,
+        cpf_cnpj: cpfCnpj,
+        date_of_birth: isCpf ? event.target.date_of_birth.value : null, // Data de nascimento se for CPF
+        company_name: isCnpj ? event.target.company_name.value : null, // Nome da empresa se for CNPJ
+        date_of_foundation: isCnpj ? event.target.date_of_foundation.value : null, // Data de fundação se for CNPJ
+      });
+  
+      // Pode tratar a resposta aqui (ex. redirecionar ou mostrar uma mensagem)
+      console.log('Usuário registrado com sucesso:', response);
+    } catch (error) {
+      console.error('Erro ao registrar usuário:', error);
     }
   };
+  
 
   // Determina se o valor inserido é CPF ou CNPJ
   const isCpf = cpfCnpj.length === 14; // Exemplo: 999.999.999-99
@@ -51,8 +75,6 @@ const UserRegister = () => {
         </h2>
         <form
           id="registrationForm"
-          action="http://localhost:5000/auth/registerUser"
-          method="POST"
           onSubmit={handleSubmit}
         >
           <div style={{ marginBottom: "15px" }}>

@@ -1,6 +1,6 @@
 /venv
 /db/injected.txt
-
+.venv
 #Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -9,6 +9,7 @@ __pycache__/
 # local env files
 .env.local
 .env.*.local
+
 
 # Log files
 npm-debug.log*
