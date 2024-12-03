@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_API } from "../resources/api";
+import { addVehicle } from "../controllers/vehicles-controllers";
 
 const AddVehicle = () => {
   const [brands, setBrands] = useState([]);
@@ -18,23 +20,18 @@ const AddVehicle = () => {
 
   // Carrega as marcas ao montar o componente
   useEffect(() => {
-    fetch("/api/brands") // Substitua pela rota correta para carregar as marcas
+    fetch(`${BASE_API}/vehicle/brands`) // Substitua pela rota correta para carregar as marcas
       .then((response) => response.json())
       .then((data) => setBrands(data))
       .catch((error) => console.error("Erro ao carregar marcas:", error));
-  }, []);
 
-  // Carrega os modelos quando uma marca é selecionada
-  useEffect(() => {
-    if (formData.id_brand) {
-      fetch(`/api/models?brand_id=${formData.id_brand}`) // Substitua pela rota correta para carregar modelos
+      fetch(`${BASE_API}/vehicle/models`) // Substitua pela rota correta para carregar modelos
         .then((response) => response.json())
         .then((data) => setModels(data))
         .catch((error) => console.error("Erro ao carregar modelos:", error));
-    } else {
-      setModels([]);
-    }
-  }, [formData.id_brand]);
+  }, []);
+
+ 
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -44,28 +41,26 @@ const AddVehicle = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = new FormData();
+    // Cria um objeto FormData
+    const formDataObj = new FormData();
     for (const key in formData) {
-      data.append(key, formData[key]);
+        formDataObj.append(key, formData[key]);
     }
 
-    fetch("/api/vehicles", {
-      method: "POST",
-      body: data,
-    })
-      .then((response) => {
-        if (response.ok) {
-          alert("Veículo cadastrado com sucesso!");
-          // Limpa o formulário ou redireciona
-        } else {
-          alert("Erro ao cadastrar veículo.");
-        }
-      })
-      .catch((error) => console.error("Erro ao enviar formulário:", error));
-  };
+    try {
+        // Chama a função de API para adicionar o veículo
+        const result = await addVehicle(formDataObj);
+        alert('Veículo adicionado com sucesso!');
+        console.log(result);
+        navigate('/home'); // Redireciona após o sucesso
+    } catch (error) {
+        alert('Erro ao adicionar veículo. Verifique os dados.');
+        console.error(error);
+    }
+};
 
   return (
     <div

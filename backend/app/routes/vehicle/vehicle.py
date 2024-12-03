@@ -140,4 +140,15 @@ def model():
         'model_name': model.model_name, 
     })
 
+@vehicle_bp.route('/models', methods=['GET'])
+def get_models():
+    models = Models.query.all()
+    models_list = [{'id': model.id, 'model_name': model.model_name, 'id_brand': model.id_brand} for model in models]
+    return jsonify(models_list)
 
+
+@vehicle_bp.route('/brands', methods=['GET'])
+def get_brands():
+    brands = Brand.query.all()
+    brands_list = [{'id': brand.id, 'name_brand': brand.name_brand} for brand in brands]
+    return jsonify(brands_list)

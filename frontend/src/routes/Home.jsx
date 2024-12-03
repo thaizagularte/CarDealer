@@ -42,6 +42,7 @@ function Home() {
           backgroundColor: "#f8f9fa",
           padding: "20px",
           borderRight: "1px solid #ddd",
+          flexShrink: 0,
         }}
       >
         <h5 className="mb-4">Menu</h5>
@@ -63,16 +64,21 @@ function Home() {
       </div>
 
       {/* Área Principal */}
-      <div style={{ flex: 1, padding: "20px" }}>
-        <Container>
-          <Row>
+      <div style={{ flex: 1, padding: "20px", overflowY: "auto" }}>
+        <Container fluid>
+          <Row className="d-flex flex-wrap justify-content-start">
             {veiculos.map((veiculo) => (
-              <Col key={veiculo.id_model} sm={12} md={6} lg={4} className="mb-4">
-                <Card>
+              <Col key={veiculo.id_model} xs={12} sm={6} md={4} lg={3} className="mb-4">
+                <Card className="h-100">
                   <Card.Img
                     variant="top"
                     src={veiculo.imageUrl}
                     alt={`Imagem do veículo ${veiculo.modelName}`}
+                    style={{
+                      width: "200px",
+                      height: "150px",
+                      objectFit: "cover",
+                    }}
                   />
                   <Card.Body>
                     <Card.Title>Modelo: {veiculo.modelName}</Card.Title>
@@ -92,5 +98,4 @@ function Home() {
     </div>
   );
 }
-
 export default Home;
