@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { getVehicles } from "../controllers/vehicles-controllers";
 import { getModel } from "../controllers/models-controllers";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +33,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="d-flex vh-100">
+    <div style={{ display: "flex", height: "100vh" }}>
       {/* Menu Lateral */}
       <div
         style={{
@@ -45,19 +44,15 @@ function Home() {
           flexShrink: 0,
         }}
       >
-        <h5 className="mb-4">Menu</h5>
+        <h5 style={{ marginBottom: "20px" }}>Menu</h5>
         <div>
           <p
-            className="mb-3"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", marginBottom: "15px" }}
             onClick={() => navigate("/home")}
           >
             Iniciar
           </p>
-          <p
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/addCar")}
-          >
+          <p style={{ cursor: "pointer" }} onClick={() => navigate("/addCar")}>
             Adicionar Veículo
           </p>
         </div>
@@ -65,37 +60,41 @@ function Home() {
 
       {/* Área Principal */}
       <div style={{ flex: 1, padding: "20px", overflowY: "auto" }}>
-        <Container fluid>
-          <Row className="d-flex flex-wrap justify-content-start">
-            {veiculos.map((veiculo) => (
-              <Col key={veiculo.id_model} xs={12} sm={6} md={4} lg={3} className="mb-4">
-                <Card className="h-100">
-                  <Card.Img
-                    variant="top"
-                    src={veiculo.imageUrl}
-                    alt={`Imagem do veículo ${veiculo.modelName}`}
-                    style={{
-                      width: "200px",
-                      height: "150px",
-                      objectFit: "cover",
-                    }}
-                  />
-                  <Card.Body>
-                    <Card.Title>Modelo: {veiculo.modelName}</Card.Title>
-                    <Card.Text>
-                      <strong>Ano:</strong> {veiculo.year} <br />
-                      <strong>Estado:</strong> {veiculo.state} <br />
-                      <strong>Quilometragem:</strong> {veiculo.mileage} km
-                    </Card.Text>
-                    <Button variant="primary">Ver mais detalhes</Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </Container>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+          {veiculos.map((veiculo) => (
+            <div
+              key={veiculo.id_model}
+              style={{
+                width: "150px",
+                border: "1px solid #ddd",
+                borderRadius: "8px",
+                overflow: "hidden",
+                boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+              }}
+            >
+              <img
+                src={veiculo.imageUrl}
+                alt={`Imagem do veículo ${veiculo.modelName}`}
+                style={{
+                  width: "100%",
+                  height: "100px",
+                  objectFit: "cover",
+                }}
+              />
+              <div style={{ padding: "10px" }}>
+                <h6 style={{ margin: "0 0 5px", fontSize: "0.9rem" }}>
+                  {veiculo.modelName}
+                </h6>
+                <p style={{ margin: 0, fontSize: "0.8rem", color: "#555" }}>
+                  <strong>Ano:</strong> {veiculo.year}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
+
 export default Home;
